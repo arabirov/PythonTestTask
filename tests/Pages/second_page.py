@@ -1,16 +1,13 @@
 from tests.Constants.locators import Locators
 
+
 class SecondPage:
     def __init__(self, driver):
         self.driver = driver
 
-        self.welcome_link_id = "welcome"
-        self.logout_link_linkText = "Logout"
+        self.__movies_field = Locators.SECOND_STEP_MOVIES
+        self.__radio_buttons_array = Locators.SECOND_STEP_RADIO_CHECK
 
-    def click_welcome(self):
-        self.driver.find_element_by_id(self.welcome_link_id).click()
+    def fill_movies_field(self, movies):
+        self.driver.find_element_by_css_selector(self.__movies_field).send_keys(movies)
         return self
-
-    def click_logout(self):
-        self.driver.find_element_by_link_text(self.logout_link_linkText).click()
-        return

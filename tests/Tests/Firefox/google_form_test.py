@@ -1,8 +1,12 @@
-from selenium import webdriver
-from tests.Constants.paths import *
 import unittest
 import logging
 import time
+import datetime
+import random
+
+from selenium import webdriver
+
+from tests.Constants.paths import *
 from tests.Pages.first_page import FirstPage  # Импорт классов Pages
 from tests.Pages.second_page import SecondPage
 from tests.Pages.third_page import ThirdPage
@@ -11,29 +15,57 @@ logger = logging.getLogger()
 logger.setLevel(logging.INFO)
 
 
+def get_random_movies():
+    movies = list()
+    movies.append("High Rollers")
+    movies.append("Apocalypse Now")
+    movies.append("Fullmetal Alchemist: Brotherhood")
+    movies.append("The Grand Budapest Hotel")
+    movies.append("Pulp Fiction")
+    movies.append("Trigun")
+    movies.append("Snatch")
+    movies.append("Knockin' on Heaven's Door")
+    random_movies = set()
+    while random_movies.__len__() < 3:
+        random_movies.add(movies[random.randrange(movies.__len__())])
+        if random_movies.__len__() >= 3:
+            movies_list = "\n".join(random_movies)
+            return movies_list
+
+
 class GoogleFormTest(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Firefox(executable_path=FIREFOX_DRIVER_PATH,
-                                           service_log_path=DRIVER_LOGS_PATH + "/geckodriver.log")
-        cls.driver.implicitly_wait(1)
+        cls.driver = webdriver.Firefox(executable_path=FIREFOX_DRIVER_PATH, service_log_path=FIREFOX_DRIVER_LOGS_PATH)
+        cls.driver.implicitly_wait(3)
         cls.driver.maximize_window()
         cls.driver.get(GOOGLE_FORM_URL)
+        cls.first_page = FirstPage(cls.driver)
+        cls.second_page = SecondPage(cls.driver)
+        cls.third_page = ThirdPage(cls.driver)
 
     def test_01_fill_first_and_second_questions(self):
-        driver = self.driver
-        first_page = FirstPage(driver)
-        first_page.checkbox_list_parse("Check this")
+        self.first_page.checkbox_list_parse_and_click("Check this")
+        plus_5_days = datetime.date.today() + datetime.timedelta(days=5)
+        self.first_page.set_date_firefox(str(plus_5_days.day), str(plus_5_days.month), str(plus_5_days.year))
 
     def test_02_validate_third_question_mandatory(self):
-        driver = self.driver
+        self.first_page.next_button_click()
+        if self.first_page.check_necessity_field():
+            pass
+        else:
+            self.test_02_validate_third_question_mandatory()
 
     def test_03_fill_third_question_go_to_next_page(self):
-        driver = self.driver
+        month = datetime.date.today().strftime("%B")
+        self.first_page.set_current_month(month)
+        time.sleep(1)
+        self.first_page.next_button_click()
 
     def test_04_fill_questions_on_second_page(self):
-        driver = self.driver
+        self.second_page.fill_movies_field(get_random_movies())
+        time.sleep(3)
 
     def test_05_go_to_first_page(self):
         driver = self.driver
@@ -62,5 +94,3 @@ class GoogleFormTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
-

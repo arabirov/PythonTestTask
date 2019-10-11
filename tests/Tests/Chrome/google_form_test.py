@@ -10,7 +10,7 @@ class LoginTest(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome(executable_path=CHROME_DRIVER_PATH,
-                                           service_log_path=DRIVER_LOGS_PATH + "/chromedriver.log")
+                                      service_log_path=CHROME_DRIVER_LOGS_PATH)
         cls.driver.implicitly_wait(1)
         cls.driver.maximize_window()
         cls.driver.get("https://opensource-demo.orangehrmlive.com/")
