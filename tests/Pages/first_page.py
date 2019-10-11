@@ -14,11 +14,12 @@ class FirstPage:
         self.__firefox_year_field = Locators.FIRST_STEP_FIREFOX_SET_YEAR
         self.__current_month_field = Locators.FIRST_STEP_CURRENT_MONTH
 
-    def checkbox_list_parse_and_click(self, text):  # добавление всех действий на странице
-        for element in self.driver.find_elements_by_css_selector(self.__checkbox_array):
-            if element.text == text:
-                element.click()
-        return self
+    def checkbox_list(self):  # добавление всех действий на странице
+        checkbox_list_ = self.driver.find_elements_by_css_selector(self.__checkbox_array)
+        return checkbox_list_
+
+    def checkbox_click(self, index):  # добавление всех действий на странице
+        self.checkbox_list()[index].click()
 
     def next_button_click(self):
         self.driver.find_element_by_css_selector(self.__next_button).click()

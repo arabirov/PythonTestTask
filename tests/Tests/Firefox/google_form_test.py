@@ -46,7 +46,12 @@ class GoogleFormTest(unittest.TestCase):
         cls.third_page = ThirdPage(cls.driver)
 
     def test_01_fill_first_and_second_questions(self):
-        self.first_page.checkbox_list_parse_and_click("Check this")
+        for element in self.first_page.checkbox_list():
+            i = 0
+            while i < self.first_page.checkbox_list().__len__():
+                if element.text == "Check this":
+                    self.first_page.checkbox_click(i)
+                i += 1
         plus_5_days = datetime.date.today() + datetime.timedelta(days=5)
         self.first_page.set_date_firefox(str(plus_5_days.day), str(plus_5_days.month), str(plus_5_days.year))
 
