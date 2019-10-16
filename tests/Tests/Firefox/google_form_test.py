@@ -5,6 +5,8 @@ import datetime
 import random
 
 from selenium import webdriver
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 from tests.Constants.paths import *
 from tests.Pages.first_page import FirstPage  # Импорт классов Pages
@@ -46,9 +48,9 @@ class GoogleFormTest(unittest.TestCase):
         cls.third_page = ThirdPage(cls.driver)
 
     def test_01_fill_first_and_second_questions(self):
+        i = 0
         for element in self.first_page.checkbox_list():
-            i = 0
-            while i < self.first_page.checkbox_list().__len__():
+            if i < self.first_page.checkbox_list().__len__():
                 if element.text == "Check this":
                     self.first_page.checkbox_click(i)
                 i += 1
@@ -70,10 +72,18 @@ class GoogleFormTest(unittest.TestCase):
 
     def test_04_fill_questions_on_second_page(self):
         self.second_page.fill_movies_field(get_random_movies())
+        i = 0
+        for element in self.second_page.radio_array():
+            if i < self.second_page.radio_array().__len__():
+                print(element.text)
+                print(self.second_page.radio_array().__len__())
+                if element.text == "Yellow":
+                    self.second_page.radio_click(i)
+                i += 1
         time.sleep(3)
 
     def test_05_go_to_first_page(self):
-        driver = self.driver
+        self.second_page.back_button_click()
 
     def test_06_reverse_text_in_third_question(self):
         driver = self.driver
