@@ -12,6 +12,7 @@ class FirstPage:
         self.__firefox_day_field = Locators.FIRST_STEP_FIREFOX_SET_DAY
         self.__firefox_month_field = Locators.FIRST_STEP_FIREFOX_SET_MONTH
         self.__firefox_year_field = Locators.FIRST_STEP_FIREFOX_SET_YEAR
+        self.__set_date = Locators.FIRST_STEP_SET_DATE
         self.__current_month_field = Locators.FIRST_STEP_CURRENT_MONTH
 
     def checkbox_list(self):  # добавление всех действий на странице
@@ -32,6 +33,10 @@ class FirstPage:
         self.driver.find_element_by_css_selector(self.__firefox_day_field).send_keys(day)
         self.driver.find_element_by_css_selector(self.__firefox_month_field).send_keys(month)
         self.driver.find_element_by_css_selector(self.__firefox_year_field).send_keys(year)
+        return self
+
+    def set_date(self, day, month, year):
+        self.driver.find_element_by_css_selector(self.__set_date).send_keys(day + month + year)
         return self
 
     def set_current_month(self, month):
