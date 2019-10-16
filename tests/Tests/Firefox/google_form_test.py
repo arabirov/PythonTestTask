@@ -84,22 +84,30 @@ class GoogleFormTest(unittest.TestCase):
         self.second_page.back_button_click()
 
     def test_06_reverse_text_in_third_question(self):
-        print("Month = " + self.first_page.get_current_month())
         month_reversed = "".join(reversed(self.first_page.get_current_month()))
         self.first_page.set_current_month(month_reversed)
         time.sleep(3)
 
     def test_07_go_to_second_page(self):
-        driver = self.driver
+        self.first_page.next_button_click()
 
     def test_08_check_that_questions_are_filled(self):
-        driver = self.driver
+        self.assertNotEqual(self.second_page.get_movies_field(), "")
+        self.assertEqual(self.second_page.check_radio_array(), "Yellow")
 
     def test_09_go_to_third_page(self):
-        driver = self.driver
+        self.second_page.next_button_click()
 
     def test_10_fill_question_and_send_form(self):
-        driver = self.driver
+        i = 0
+        for element in self.third_page.radio_array():
+            if i < self.third_page.radio_array().__len__():
+                if element.text == "Yes":
+                    self.third_page.radio_click(i)
+                i += 1
+        time.sleep(1)
+        self.third_page.next_button_click()
+        time.sleep(5)
 
     @classmethod
     def tearDownClass(cls):
