@@ -35,5 +35,10 @@ class FirstPage:
         return self
 
     def set_current_month(self, month):
+        self.driver.find_element_by_css_selector(self.__current_month_field).clear()
         self.driver.find_element_by_css_selector(self.__current_month_field).send_keys(month)
         return self
+
+    def get_current_month(self):
+        current_month = self.driver.find_element_by_css_selector(self.__current_month_field).get_attribute("value")
+        return current_month

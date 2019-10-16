@@ -75,8 +75,6 @@ class GoogleFormTest(unittest.TestCase):
         i = 0
         for element in self.second_page.radio_array():
             if i < self.second_page.radio_array().__len__():
-                print(element.text)
-                print(self.second_page.radio_array().__len__())
                 if element.text == "Yellow":
                     self.second_page.radio_click(i)
                 i += 1
@@ -86,7 +84,10 @@ class GoogleFormTest(unittest.TestCase):
         self.second_page.back_button_click()
 
     def test_06_reverse_text_in_third_question(self):
-        driver = self.driver
+        print("Month = " + self.first_page.get_current_month())
+        month_reversed = "".join(reversed(self.first_page.get_current_month()))
+        self.first_page.set_current_month(month_reversed)
+        time.sleep(3)
 
     def test_07_go_to_second_page(self):
         driver = self.driver
