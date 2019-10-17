@@ -4,14 +4,7 @@ import time
 import datetime
 import random
 
-from selenium import webdriver
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.support.ui import WebDriverWait
-
-from tests.Constants.paths import *
-from tests.Pages.first_page import FirstPage  # Импорт классов Pages
-from tests.Pages.second_page import SecondPage
-from tests.Pages.third_page import ThirdPage
+from tests.Constants.firefox_environment import Env
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -35,17 +28,7 @@ def get_random_movies():
             return movies_list
 
 
-class GoogleFormTest(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.driver = webdriver.Firefox(executable_path=FIREFOX_DRIVER_PATH, service_log_path=FIREFOX_DRIVER_LOGS_PATH)
-        cls.driver.implicitly_wait(3)
-        cls.driver.maximize_window()
-        cls.driver.get(GOOGLE_FORM_URL)
-        cls.first_page = FirstPage(cls.driver)
-        cls.second_page = SecondPage(cls.driver)
-        cls.third_page = ThirdPage(cls.driver)
+class GoogleFormTest(Env):
 
     def test_01_fill_first_and_second_questions(self):
         i = 0
@@ -108,12 +91,6 @@ class GoogleFormTest(unittest.TestCase):
         time.sleep(1)
         self.third_page.next_button_click()
         time.sleep(5)
-
-    @classmethod
-    def tearDownClass(cls):
-        cls.driver.close()
-        cls.driver.quit()
-        print("Test completed")
 
 
 if __name__ == '__main__':
