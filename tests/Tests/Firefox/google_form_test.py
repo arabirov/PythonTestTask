@@ -4,8 +4,7 @@ import time
 import datetime
 import random
 
-from tests.Constants.firefox_environment import EnvironmentFirefox, Pages
-from tests.Tests.Firefox.first_test_example import FirstPage
+from tests.Constants.firefox_environment import EnvironmentFirefox
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -32,16 +31,14 @@ def get_random_movies():
 class GoogleFormTest(EnvironmentFirefox):
 
     def test_01_fill_first_and_second_questions(self):
-        FirstPage(self.driver).test_01_fill_first_and_second_questions()
-    # def test_01_fill_first_and_second_questions(self):
-    #     i = 0
-    #     for element in self.first_page.checkbox_list():
-    #         if i < self.first_page.checkbox_list().__len__():
-    #             if element.text == "Check this":
-    #                 self.first_page.checkbox_click(i)
-    #             i += 1
-    #     plus_5_days = datetime.date.today() + datetime.timedelta(days=5)
-    #     self.first_page.set_date_firefox(str(plus_5_days.day), str(plus_5_days.month), str(plus_5_days.year))
+        i = 0
+        for element in self.first_page.checkbox_list():
+            if i < self.first_page.checkbox_list().__len__():
+                if element.text == "Check this":
+                    self.first_page.checkbox_click(i)
+                i += 1
+        plus_5_days = datetime.date.today() + datetime.timedelta(days=5)
+        self.first_page.set_date_firefox(str(plus_5_days.day), str(plus_5_days.month), str(plus_5_days.year))
 
     def test_02_validate_third_question_mandatory(self):
         self.first_page.next_button_click()
