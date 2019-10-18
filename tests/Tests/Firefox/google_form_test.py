@@ -5,6 +5,7 @@ import datetime
 import random
 
 from tests.Constants.firefox_environment import EnvironmentFirefox, Pages
+from tests.Tests.Firefox.first_test_example import FirstPage
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -30,6 +31,8 @@ def get_random_movies():
 
 class GoogleFormTest(EnvironmentFirefox):
 
+    # def test_01_fill_first_and_second_questions(self):
+    #     Login(self.driver).test_01_fill_first_and_second_questions()
     def test_01_fill_first_and_second_questions(self):
         i = 0
         for element in self.first_page.checkbox_list():
