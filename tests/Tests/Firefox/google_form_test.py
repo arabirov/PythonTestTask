@@ -4,7 +4,7 @@ import time
 import datetime
 import random
 
-from tests.Constants.firefox_environment import Env, Pages
+from tests.Constants.firefox_environment import EnvironmentFirefox, Pages
 
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)
@@ -28,7 +28,7 @@ def get_random_movies():
             return movies_list
 
 
-class GoogleFormTest(Env, Pages):
+class GoogleFormTest(EnvironmentFirefox):
 
     def test_01_fill_first_and_second_questions(self):
         i = 0
