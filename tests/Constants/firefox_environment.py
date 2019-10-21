@@ -13,9 +13,16 @@ logger.setLevel(logging.INFO)
 
 
 class EnvironmentFirefox(unittest.TestCase):
+
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Firefox(executable_path=FIREFOX_DRIVER_PATH, service_log_path=FIREFOX_DRIVER_LOGS_PATH)
+        if cls.browser == "Firefox".lower():
+            cls.driver = webdriver.Firefox(executable_path=FIREFOX_DRIVER_PATH, service_log_path=FIREFOX_DRIVER_LOGS_PATH)
+            logging.info("Stating Firefox tests...")
+        else:
+            print(cls.browser)
+            logging.info("Browser is not supported!")
+            raise Exception
         cls.first_page = FirstPage(cls.driver)
         cls.second_page = SecondPage(cls.driver)
         cls.third_page = ThirdPage(cls.driver)
